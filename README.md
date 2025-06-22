@@ -1,5 +1,5 @@
 # MOVIE SEARCH APP
-*Company name*:CODTECH IT SOLUTIONS
+*Company name*: CODTECH IT SOLUTIONS
 
 *Name*: Swaranjit Banerjee
 
