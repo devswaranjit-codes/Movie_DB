@@ -20,9 +20,10 @@ const [errorMessage, setErrorMessage] = useState('')
 const [movieList, setMovieList] = useState([])
 const [isLoading, setIsLoading] = useState('')
 const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('')
+ const [trailerKey, setTrailerKey] = useState('')
 useDebounce(() => {
   setDebouncedSearchTerm(searchTerm)
-}, 500, [searchTerm])
+}, 600, [searchTerm])
 // Debounce the search term to avoid too many API calls
 
 const fetchmovies = async (query = '') => {
@@ -53,6 +54,12 @@ const fetchmovies = async (query = '') => {
       setIsLoading(false)
     }
   }
+ const handleCardClick = (movie) => {
+  const youtubeSearchQuery = encodeURIComponent(`${movie.title} trailer`);
+  const youtubeSearchURL = `https://www.youtube.com/results?search_query=${youtubeSearchQuery}`;
+  window.open(youtubeSearchURL, '_blank');
+};
+
 useEffect(() => {
  fetchmovies(debouncedSearchTerm)
 }, [debouncedSearchTerm])
@@ -75,11 +82,24 @@ useEffect(() => {
           ) :(
             <ul>
               {movieList.map((movie) => (
-               <Card key={movie.id} movie={movie}/>
+               <Card key={movie.id} movie={movie} onClick={() => handleCardClick(movie)}/>
               ))}
             </ul>
           ) }
         </section>
+        
+        {trailerKey && (
+          <div className="trailer-modal">
+            <iframe
+              width="90%"
+              height="400"
+              src={`https://www.youtube.com/${trailerKey}?autoplay=1&mute=1`}
+              target="_blank"
+              allowFullScreen
+            ></iframe>
+            <button className="close-btn" onClick={() => setTrailerKey(null)}>Close</button>
+          </div>
+        )}
 
     </div>
     </main>
