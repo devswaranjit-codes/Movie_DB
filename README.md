@@ -100,5 +100,7 @@ Tailwind CSS
 
 Vite
 
-  Developed by: Swaranjit Banerjee
-🔗 Portfolio: https://swaranjitbanerjee.live
+
+   Developed by: Swaranjit Banerjee
+
+  🔗 Portfolio: https://swaranjitbanerjee.live
