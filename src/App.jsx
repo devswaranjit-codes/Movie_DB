@@ -3,6 +3,7 @@ import Search from './components/Search'
 import './App.css'
 import Spinner from './components/Spinner'
 import Card from './components/Card'
+import {useDebounce} from 'react-use'
 
 const API_BASE_URL = 'https://api.themoviedb.org/3'
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY
@@ -18,11 +19,19 @@ const [searchTerm, setSearchTerm] = useState('')
 const [errorMessage, setErrorMessage] = useState('')
 const [movieList, setMovieList] = useState([])
 const [isLoading, setIsLoading] = useState('')
-const fetchmovies = async () => {
+const [debouncedSearchTerm, setDebouncedSearchTerm] = useState('')
+useDebounce(() => {
+  setDebouncedSearchTerm(searchTerm)
+}, 500, [searchTerm])
+// Debounce the search term to avoid too many API calls
+
+const fetchmovies = async (query = '') => {
   setIsLoading(true)
   setErrorMessage('')
     try {
-      const endpoint = `${API_BASE_URL}/discover/movie?sort_by=popularity.desc&api_key=${API_KEY}`
+      const endpoint = query
+      ? `${API_BASE_URL}/search/movie?query=${encodeURIComponent(query)}&api_key=${API_KEY}` 
+      :`${API_BASE_URL}/discover/movie?sort_by=popularity.desc&api_key=${API_KEY}`
       const response = await fetch(endpoint, API_OPTIONS)
 
       if (!response.ok) {
@@ -35,7 +44,6 @@ const fetchmovies = async () => {
         setMovieList([])
         return
       }
-
       console.log('Fetched movies:', data)
       setMovieList(data.results);
     } catch (error) {
@@ -45,21 +53,21 @@ const fetchmovies = async () => {
       setIsLoading(false)
     }
   }
-
 useEffect(() => {
- fetchmovies()
-}, [])
+ fetchmovies(debouncedSearchTerm)
+}, [debouncedSearchTerm])
   return (
     <main >
       <div className="wrapper">
         <header >
+          <img src="./logo.png" alt="Logo" className="h-20; w-auto; display-block; mt-0 m-auto" />
           <img src="./hero.png" alt="Hero Banner" />
           <h1>Find <span className="text-gradient">Movies</span> You'll Enjoy Without the Hassle</h1>
           <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
         </header>
 
         <section className="all-movies">
-          <h2 className='mt-[20px]'>All Movies</h2>
+          <h2 className='mt-[20px]'>MOVIE LIST</h2>
          { isLoading ? (
             <Spinner/>
           ) : errorMessage ? (
@@ -68,7 +76,6 @@ useEffect(() => {
             <ul>
               {movieList.map((movie) => (
                <Card key={movie.id} movie={movie}/>
-
               ))}
             </ul>
           ) }
