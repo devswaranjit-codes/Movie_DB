@@ -26,7 +26,7 @@
 - 🖼️ **Optimized Images** – Lazy loading for faster page speed
 
 ## 📸 Screenshot
-![Screenshot](./public/Home.jpg)
+![Screenshot](./public/Screenshot 2025-06-23 114948.png)
 
 ## 🛠️ Tech Stack
 
