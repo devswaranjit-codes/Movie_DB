@@ -48,7 +48,7 @@
    ```bash
     npm install
 
-3. **Create ENV file **
+3. **Create ENV file**
    ```bash
    VITE_TMDB_API_KEY=your_tmdb_api_key_here
 
