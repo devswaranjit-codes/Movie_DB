@@ -38,16 +38,6 @@
 
 [🔗 View Live](https://movie-db-six-lime.vercel.app/) 
 
-## 📂 Folder Structure
-Movie_DB/
-├── public/
-├── src/
-│ ├── components/
-│ └── App.jsx
-├── README.md
-└── package.json
-
-
 ## ⚙️ Installation & Setup
 
 1. **Clone the repository**
